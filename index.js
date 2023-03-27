@@ -1,0 +1,17 @@
+const express=require("express")
+const connection=require("./connection/db")
+require('dotenv').config()
+const userrouter=require("./route/userroute")
+const postrouter=require("./route/postroute")
+const auth=require("./middleware/auth")
+// const cors=require("cors")
+const app=express()
+app.use(express.json())
+// app.use(cors())
+app.use("/users",userrouter)
+app.use(auth)
+app.use("/posts",postrouter)
+app.listen(process.env.port,async()=>{
+    await connection
+    console.log("connected to DB")
+})
